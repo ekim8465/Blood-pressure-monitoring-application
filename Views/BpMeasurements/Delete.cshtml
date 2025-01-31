@@ -1,0 +1,30 @@
+﻿@model DeleteBpMeasurementViewModel;
+
+@{
+	ViewData["Title"] = "Delete a BP Measurement";
+}
+
+<h2>Confirm Deletion</h2>
+
+@if (Model.CurrentBpMeasurement !=null && Model.CurrentBpMeasurement.Id > 0)
+{
+	<form method="post" asp-action="DeleteBpMeasurement">
+		<div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+		<input type="hidden" asp-for="CurrentBpMeasurement.Id"/>
+		<input type="hidden" asp-for="CurrentBpMeasurement.SystolicValue" />
+		<input type="hidden" asp-for="CurrentBpMeasurement.DiastolicValue" />
+		<input type="hidden" asp-for="CurrentBpMeasurement.ReadingDate" />
+
+		<div>
+			<div class="mb-3">
+				<h3>@Model.CurrentBpMeasurement.SystolicValue/@Model.CurrentBpMeasurement.DiastolicValue (taken on @Model.CurrentBpMeasurement.ReadingDate?.ToString("yyyy-MM-dd HH:mm:ss tt"))</h3>
+			</div>
+
+		</div>
+
+		<input class="btn btn-danger" type="submit" value="Delete" />
+		<a class="btn btn-info" asp-action="AllBpMeasurement">Cancel</a>
+
+	</form>
+}

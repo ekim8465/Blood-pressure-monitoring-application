@@ -1,0 +1,101 @@
+﻿@model AllBpMeasurementsViewModel;
+
+@{
+	ViewData["Title"] = "All Measurements";
+}
+
+<h1>All Measurements</h1>
+
+<p><a asp-action="AddBpMeasurement">Add new BP measurement</a>   |   <a asp-action="BpMeasurementInformation">Information on BP measurement</a></p>
+
+@if(Model.AllBpMeasurements.Count > 0)
+{
+	@if (TempData.Keys.Contains("message"))
+	{
+		<div class="alert alert-@TempData["className"] alert-dismissible fade show" role="alert">
+			@TempData["message"];
+		</div>
+	}
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Reading</th>
+				<th>Category</th>
+				<th>Position</th>
+				<th>Date Taken</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach(var bpMeasurement in Model.AllBpMeasurements)
+			{
+				<tr>
+					<td>
+						@if (bpMeasurement.Category == "Nomal")
+						{
+							<span style="color: darkgreen;">@bpMeasurement.SystolicValue/@bpMeasurement.DiastolicValue</span>
+						}
+						else if (bpMeasurement.Category == "Elevated")
+						{
+							<span style="color: blue;">@bpMeasurement.SystolicValue/@bpMeasurement.DiastolicValue</span>
+						}
+						else if (bpMeasurement.Category == "Hypertension Stage 1")
+						{
+							<span style="color: orange;">@bpMeasurement.SystolicValue/@bpMeasurement.DiastolicValue</span>
+						}
+						else if (bpMeasurement.Category == "Hypertension Stage 2")
+						{
+							<span style="color: orangered;">@bpMeasurement.SystolicValue/@bpMeasurement.DiastolicValue</span>
+						}
+						else if (bpMeasurement.Category == "Hypertensive Crisis")
+						{
+							<span style="color: black;">@bpMeasurement.SystolicValue/@bpMeasurement.DiastolicValue</span>
+						}
+						else
+						{
+							<span>@bpMeasurement.Category</span>
+						}
+					</td>
+					<td>
+						@if (bpMeasurement.Category == "Nomal")
+						{
+							<span style="color: darkgreen;">@bpMeasurement.Category</span>
+						}
+						else if (bpMeasurement.Category == "Elevated")
+						{
+							<span style="color: blue;">@bpMeasurement.Category</span>
+						}
+						else if (bpMeasurement.Category == "Hypertension Stage 1")
+						{
+							<span style="color: orange;">@bpMeasurement.Category</span>
+						}
+						else if (bpMeasurement.Category == "Hypertension Stage 2")
+						{
+							<span style="color: orangered;">@bpMeasurement.Category</span>
+						}
+						else if (bpMeasurement.Category == "Hypertensive Crisis")
+						{
+							<span style="color: darkred;">@bpMeasurement.Category</span>
+						}
+						else
+						{
+							<span>@bpMeasurement.Category</span> 
+						}
+					</td>
+					<td>@bpMeasurement.Position</td>
+					<td>@bpMeasurement.ReadingDate?.ToShortDateString()</td>
+					<td>
+						<a class="link-info" asp-action="EditBpMeasurement" asp-route-id="@bpMeasurement.Id">Edit</a> |
+						<a class="link-info" asp-action="DeleteBpMeasurement" asp-route-id="@bpMeasurement.Id">Delete</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<div class="alert alert-warning" role="alert">
+		No blood pressure measurements found.
+	</div>
+}

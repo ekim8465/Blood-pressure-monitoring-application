@@ -1,0 +1,50 @@
+﻿@model EditBpMeasurementViewModel;
+
+@{
+	ViewData["Title"] = "Edit a BP Measurement";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (Model.CurrentBpMeasurement.Id !=null)
+{
+	<form method="post" asp-action="EditBpMeasurement">
+		<input type="hidden" asp-for="CurrentBpMeasurement.Id" />
+
+		<div>
+			<div class="mb-3">
+				<label class="form-label" asp-for="CurrentBpMeasurement.SystolicValue">Systolic (mm Hg)</label>
+				<span class="form-text text-danger" asp-validation-for="CurrentBpMeasurement.SystolicValue"></span>
+				<input class="form-control" type="text" asp-for="CurrentBpMeasurement.SystolicValue" />
+			</div>
+
+			<div class="mb-3">
+			<label class="form-label" asp-for="CurrentBpMeasurement.DiastolicValue">Diastolic (mm Hg)</label>
+			<span class="form-text text-danger" asp-validation-for="CurrentBpMeasurement.DiastolicValue"></span>
+			<input class="form-control" type="text" asp-for="CurrentBpMeasurement.DiastolicValue" />
+			</div>
+
+			<div class="mb-3">
+				<label class="form-label" asp-for="CurrentBpMeasurement.Position">Position</label>
+				<select class="form-select" asp-for="CurrentBpMeasurement.Position">
+					@foreach (var position in Model.Positions)
+					{
+						<option value="@position">@position</option>
+					}
+
+				</select>
+			</div>
+
+			<div class="mb-3">
+				<label class="form-label" asp-for="CurrentBpMeasurement.ReadingDate">Date of measurement</label>
+				<span class="form-text text-danger" asp-validation-for="CurrentBpMeasurement.ReadingDate"></span>
+				<input class="form-control" type="Date" asp-for="CurrentBpMeasurement.ReadingDate" />
+			</div>
+
+			<input class="btn btn-info" type="submit" value="Edit"/>
+			<a class="btn btn-info" asp-action="AllBpMeasurement">Cancel</a>
+
+		</div>
+
+	</form>
+}
